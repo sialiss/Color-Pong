@@ -12,7 +12,7 @@ func _ready():
 	screen_size = get_viewport_rect().size
 
 func _process(delta):
-	var velocity = Vector2.ZERO
+	var velocity = 0
 
 	if Input.get_axis(up, down):
 		velocity = Input.get_axis(up, down) * speed
@@ -23,9 +23,8 @@ func _process(delta):
 	# else:
 	# 	$AnimatedSprite.stop()
 
-	position += Vector2(0, 1) * velocity * delta
+	position.y += velocity * delta
 	# position = lerp(position, position + Vector2(0, 1) * velocity * delta, 0.9)
-	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
 	# if velocity.x != 0:
