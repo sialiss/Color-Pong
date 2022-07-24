@@ -3,22 +3,24 @@ extends Area2D
 export var DEFAULT_SPEED = 350
 
 var direction = Vector2.LEFT
-var stopped = false
 var _speed = DEFAULT_SPEED
 
-onready var _screen_size = get_viewport_rect().size
+onready var screen_size = get_viewport_rect().size
 
 func _process(delta):
 	_speed += delta
-	if not stopped:
-		translate(_speed * delta * direction)
 
 	var ball_pos = position
-	if (ball_pos.y < 0 and direction.y < 0) or (ball_pos.y > _screen_size.y and direction.y > 0):
+	if (ball_pos.y < 0 and direction.y < 0) or (ball_pos.y > screen_size.y and direction.y > 0):
 		direction.y = -direction.y
 
-func _reset_ball(for_left):
-	position = _screen_size / 2
+	if ball_pos.x < 0:
+		reset_ball(false)
+	if ball_pos.x > screen_size.x:
+		reset_ball(true)
+
+func reset_ball(for_left):
+	position = screen_size / 2
 	if for_left:
 		direction = Vector2.LEFT
 	else:
